@@ -7,6 +7,8 @@ using System.Net;
 
 public class Network : MonoBehaviour
 {
+    private const float MINDISTANCE = 0.1f;
+
     public GameObject enemy;
     public Dictionary<String, GameObject> enemies;
     public Vector3 lastPos;
@@ -63,7 +65,10 @@ public class Network : MonoBehaviour
     void updateSelf()
     {
         // Only update if we changed position
-        if (lastPos != player.transform.position)
+        Vector3 distance = lastPos - player.transform.position;
+        if (Mathf.Abs(distance.x) > MINDISTANCE ||
+            Mathf.Abs(distance.y) > MINDISTANCE ||
+            Mathf.Abs(distance.z) > MINDISTANCE)
         {
             ez.sendData(string.Format("{0},{1},{2}",
                 player.transform.position.x,
