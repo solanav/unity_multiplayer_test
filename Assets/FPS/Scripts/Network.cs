@@ -8,10 +8,12 @@ using System.Net;
 public class Network : MonoBehaviour
 {
     private const float MINDISTANCE = 0.1f;
+    private const float MINANGLE = 1f;
 
     public GameObject enemy;
     public Dictionary<String, GameObject> enemies;
     public Vector3 lastPos;
+    public Quaternion lastRot;
     public GameObject player;
     public EzNet ez;
 
@@ -19,7 +21,6 @@ public class Network : MonoBehaviour
     void Start()
     {
         ez = new EzNet();
-        ez.sendData("handshake?");
 
         lastPos = new Vector3(0, 0, 0);
         player = GameObject.Find("Player");
@@ -40,22 +41,30 @@ public class Network : MonoBehaviour
         if (!data.Equals(string.Empty))
         {
             string[] parsed = data.Split(',');
-            if (parsed.Length == 4)
+            if (parsed.Length == 8)
             {
+                // Get hash
                 string id = parsed[0];
+                
+                // Get position
                 float x = float.Parse(parsed[1]);
-                float y = float.Parse(parsed[2]);
+                float y = float.Parse(parsed[2]) + enemy.transform.lossyScale.y / 2;
                 float z = float.Parse(parsed[3]);
+                
+                // Get rotation
+                float rx = float.Parse(parsed[4]);
+                float ry = float.Parse(parsed[5]);
+                float rz = float.Parse(parsed[6]);
+                float rw = float.Parse(parsed[7]);
 
                 // If it exists, update the position, else add a new enemy
                 if (enemies.ContainsKey(id))
                 {
-                    Debug.Log("Updating position");
                     enemies[id].transform.position = new Vector3(x, y, z);
+                    enemies[id].transform.rotation = new Quaternion(rx, ry, rz, rw);
                 }
                 else
                 {
-                    Debug.Log("New player");
                     addPlayer(id, new Vector3(x, y, z));
                 }
             }
@@ -64,18 +73,28 @@ public class Network : MonoBehaviour
 
     void updateSelf()
     {
+        Debug.Log(player.transform.GetChild(0).rotation);
+
         // Only update if we changed position
         Vector3 distance = lastPos - player.transform.position;
+        float angle = Quaternion.Angle(lastRot, player.transform.GetChild(0).rotation);
+        Debug.Log(angle);
         if (Mathf.Abs(distance.x) > MINDISTANCE ||
             Mathf.Abs(distance.y) > MINDISTANCE ||
-            Mathf.Abs(distance.z) > MINDISTANCE)
+            Mathf.Abs(distance.z) > MINDISTANCE ||
+            angle > MINANGLE)
         {
-            ez.sendData(string.Format("{0},{1},{2}",
+            ez.sendData(string.Format("{0},{1},{2},{3},{4},{5},{6}",
                 player.transform.position.x,
                 player.transform.position.y,
-                player.transform.position.z));
+                player.transform.position.z,
+                player.transform.GetChild(0).rotation.x,
+                player.transform.GetChild(0).rotation.y,
+                player.transform.GetChild(0).rotation.z,
+                player.transform.GetChild(0).rotation.w));
 
             lastPos = player.transform.position;
+            lastRot = player.transform.GetChild(0).rotation;
         }
     }
 
