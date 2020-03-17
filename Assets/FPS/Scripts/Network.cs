@@ -61,7 +61,7 @@ public class Network : MonoBehaviour
                 if (enemies.ContainsKey(id))
                 {
                     enemies[id].transform.position = new Vector3(x, y, z);
-                    enemies[id].transform.rotation = new Quaternion(rx, ry, rz, rw);
+                    enemies[id].transform.GetChild(0).rotation = new Quaternion(rx, ry, rz, rw);
                 }
                 else
                 {
