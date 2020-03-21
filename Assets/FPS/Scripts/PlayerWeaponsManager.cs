@@ -78,6 +78,8 @@ public class PlayerWeaponsManager : MonoBehaviour
     float m_TimeStartedWeaponSwitch;
     WeaponSwitchState m_WeaponSwitchState;
     int m_WeaponSwitchNewWeaponIndex;
+    
+    public bool hasFired;
 
     private void Start()
     {
@@ -113,7 +115,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             isAiming = m_InputHandler.GetAimInputHeld();
 
             // handle shooting
-            bool hasFired = activeWeapon.HandleShootInputs(
+            hasFired = activeWeapon.HandleShootInputs(
                 m_InputHandler.GetFireInputDown(),
                 m_InputHandler.GetFireInputHeld(),
                 m_InputHandler.GetFireInputReleased());

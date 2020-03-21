@@ -15,6 +15,7 @@ public class Network : MonoBehaviour
     public Vector3 lastPos;
     public Quaternion lastRot;
     public GameObject player;
+    public PlayerWeaponsManager weapon;
     public EzNet ez;
 
     // Start is called before the first frame update
@@ -24,6 +25,7 @@ public class Network : MonoBehaviour
 
         lastPos = new Vector3(0, 0, 0);
         player = GameObject.Find("Player");
+        weapon = player.GetComponent<PlayerWeaponsManager>();
 
         enemies = new Dictionary<string, GameObject>();
     }
@@ -33,6 +35,15 @@ public class Network : MonoBehaviour
     {
         this.updateEnemies();
         this.updateSelf();
+
+        if (this.weapon.hasFired)
+        {
+            this.ez.sendData(string.Format("{0},{1},{2},{3}",
+                1,
+                weapon.weaponCamera.transform.forward.normalized.x,
+                weapon.weaponCamera.transform.forward.normalized.y,
+                weapon.weaponCamera.transform.forward.normalized.z));
+        }
     }
 
     void updateEnemies()
@@ -48,7 +59,7 @@ public class Network : MonoBehaviour
                 
                 // Get position
                 float x = float.Parse(parsed[1]);
-                float y = float.Parse(parsed[2]) + enemy.transform.lossyScale.y / 2;
+                float y = float.Parse(parsed[2]);
                 float z = float.Parse(parsed[3]);
                 
                 // Get rotation
@@ -84,7 +95,8 @@ public class Network : MonoBehaviour
             Mathf.Abs(distance.z) > MINDISTANCE ||
             angle > MINANGLE)
         {
-            ez.sendData(string.Format("{0},{1},{2},{3},{4},{5},{6}",
+            ez.sendData(string.Format("{0},{1},{2},{3},{4},{5},{6},{7}",
+                0,
                 player.transform.position.x,
                 player.transform.position.y,
                 player.transform.position.z,
@@ -113,6 +125,7 @@ public class EzNet
 {
     public const string server_name = "127.0.0.1"; // Server ip
     public const int server_port = 4343; // Server port
+    public const int max_packet = 256; // Max size of a packet
     public IPEndPoint server_rep; // Server remote ip end point
 
     UdpClient udpClient;
@@ -128,7 +141,8 @@ public class EzNet
         try
         {
             udpClient.Connect(server_name, server_port);
-            byte[] sendBytes = Encoding.ASCII.GetBytes(data);
+            byte[] sendBytes = new byte[max_packet];
+            sendBytes = Encoding.ASCII.GetBytes(data);
             udpClient.Send(sendBytes, sendBytes.Length);
         }
         catch (Exception e)

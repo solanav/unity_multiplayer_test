@@ -4589,6 +4589,36 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 638881714921755629, guid: 3ea0e83fc1f341548ba36500466ed0bb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 638881714921755629, guid: 3ea0e83fc1f341548ba36500466ed0bb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 638881714921755629, guid: 3ea0e83fc1f341548ba36500466ed0bb,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 638881714921755629, guid: 3ea0e83fc1f341548ba36500466ed0bb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 638881714921755629, guid: 3ea0e83fc1f341548ba36500466ed0bb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.138
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483270265393583966, guid: 3ea0e83fc1f341548ba36500466ed0bb,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 95c9ca4845a61914583b5f410180a807, type: 3}
     - target: {fileID: 4857158596088880707, guid: 3ea0e83fc1f341548ba36500466ed0bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4663,6 +4693,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 9160765979556182829, guid: 3ea0e83fc1f341548ba36500466ed0bb,
+        type: 3}
+      propertyPath: m_Name
+      value: Head
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ea0e83fc1f341548ba36500466ed0bb, type: 3}
