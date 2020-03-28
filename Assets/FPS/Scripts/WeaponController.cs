@@ -247,7 +247,7 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    bool TryShoot()
+    public bool TryShoot()
     {
         if (m_CurrentAmmo >= 1f 
             && m_LastTimeShot + delayBetweenShots < Time.time)
@@ -290,7 +290,7 @@ public class WeaponController : MonoBehaviour
         return false;
     }
 
-    void HandleShoot()
+    public void HandleShoot()
     {
         // spawn all bullets with random direction
         for (int i = 0; i < bulletsPerShot; i++)

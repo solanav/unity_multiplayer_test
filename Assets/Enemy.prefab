@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4857158596088880707}
   - component: {fileID: 55444499114104420}
   - component: {fileID: 7627333193499156126}
-  - component: {fileID: 4157325664886346201}
+  - component: {fileID: 7553548944896639682}
   - component: {fileID: 7575118396771782778}
   m_Layer: 0
   m_Name: Enemy
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &4157325664886346201
+--- !u!114 &7553548944896639682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,9 +89,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 5147840046813773878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce3c0d304e41e79449dd78cafaa86808, type: 3}
+  m_Script: {fileID: 11500000, guid: 1bc91b5836e2d5a41bb7f50742d93d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingWeapons: []
+  weaponCamera: {fileID: 0}
+  weaponParentSocket: {fileID: 0}
+  defaultWeaponPosition: {fileID: 0}
+  aimingWeaponPosition: {fileID: 0}
+  downWeaponPosition: {fileID: 0}
+  bobFrequency: 10
+  bobSharpness: 10
+  defaultBobAmount: 0.05
+  aimingBobAmount: 0.02
+  recoilSharpness: 50
+  maxRecoilDistance: 0.5
+  recoilRestitutionSharpness: 10
+  aimingAnimationSpeed: 10
+  defaultFOV: 60
+  weaponFOVMultiplier: 1
+  weaponSwitchDelay: 1
+  FPSWeaponLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  hasFired: 0
 --- !u!136 &7575118396771782778
 CapsuleCollider:
   m_ObjectHideFlags: 0
